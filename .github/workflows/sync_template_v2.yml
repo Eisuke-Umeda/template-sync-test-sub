@@ -55,7 +55,7 @@ jobs:
         uses: hmarr/auto-approve-action@v4
         with:
           pull-request-number: ${{ steps.create-pull-request.outputs.pull-request-number }}
-          github-token: ${{ GH_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
       
       - name: Merge pull Request
         run: |
