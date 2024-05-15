@@ -56,8 +56,8 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          branch: ${{ github.head_ref }}
-          repository: Eisuke-Umeda/template_sync_replica
+          branch: ${{ env.work_branch }}
+          repository: Eisuke-Umeda/template-sync-test-sub
           force_with_lease: true
         if:
           steps.check_diff.outcome == 'failure'
