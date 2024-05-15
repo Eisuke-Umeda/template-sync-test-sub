@@ -55,6 +55,6 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           branch: ${{ github.head_ref }}
           repository: Eisuke-Umeda/template-sync-test-sub
-          force_with_lease: true
+          force: true
         if:
           steps.check_diff.outcome == 'failure'
