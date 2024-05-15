@@ -30,7 +30,6 @@ jobs:
 
 
       - name: Approve Pull Request
-        env:
         run: |
           gh pr review $PR_URL --approve
 
