@@ -20,7 +20,12 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ env.work_branch }}
+          ref: main
+
+      - name: Create & Checkout local branch
+        run: |
+          git branch ${{ env.work_branch }}
+          git checkout ${{ env.work_branch }}
 
       - name: Checkout branch
         uses: actions/checkout@v4
