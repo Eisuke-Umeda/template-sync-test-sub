@@ -20,7 +20,7 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ env.work_branch }}
 
       - name: Checkout branch
         uses: actions/checkout@v4
