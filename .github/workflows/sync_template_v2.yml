@@ -1,0 +1,52 @@
+name: Sync GitHub Template
+
+on:
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  id-token: write
+  contents: write
+  pull-requests: write
+
+env:
+  work_branch: auto-sync/github-templates
+
+jobs:
+  sync-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          repository: Eisuke-Umeda/template_sync_main
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+          path: .tmp/
+          sparse-checkout: |
+            .github/ISSUE_TEMPLATE
+            .github/PULL_REQUEST_TEMPLATE.md
+
+      - name: Replace template
+        run: |
+          rm -rf .github/ISSUE_TEMPLATE .github/PULL_REQUEST_TEMPLATE.md
+          cp -pr .tmp/.github/ISSUE_TEMPLATE .github/
+          cp -pr .tmp/.github/PULL_REQUEST_TEMPLATE.md .github/
+          rm -rf .tmp
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with: 
+          commit-message: Auto sync GitHub templates
+          commiter: GitHub Action <action@github.com>
+          author: GitHub Action <action@github.com>
+          branch: ${{ env.work_branck }}
+          delete-branch: true
+          title: Auto sync GitHub templates
+

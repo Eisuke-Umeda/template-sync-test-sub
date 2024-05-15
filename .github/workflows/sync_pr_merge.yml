@@ -1,15 +1,15 @@
 name: PR Merge
 
 on:
-  pull_request:
-    types:
-      - synchronize # prにcommit がpushされた時
-      - opened # prがopenされた時
-      - ready_for_review # draft → prに変更された時
-      - reopened # closeされたprが再度openした時
-    paths:
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.github/PULL_REQUEST_TEMPLATE.md'
+  #pull_request:
+  #  types:
+  #    - synchronize # prにcommit がpushされた時
+  #    - opened # prがopenされた時
+  #    - ready_for_review # draft → prに変更された時
+  #    - reopened # closeされたprが再度openした時
+  #  paths:
+  #    - '.github/ISSUE_TEMPLATE/**'
+  #    - '.github/PULL_REQUEST_TEMPLATE.md'
 
 permissions:
   contents: write
