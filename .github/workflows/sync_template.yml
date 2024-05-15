@@ -4,7 +4,10 @@ on:
   workflow_dispatch:
 
 permissions:
+  checks: write
+  id-token: write
   contents: write
+  pull-requests: write
 
 env:
   work_branch: sync-template-work
