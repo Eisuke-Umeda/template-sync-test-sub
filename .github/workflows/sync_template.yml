@@ -61,12 +61,8 @@ jobs:
           steps.check_diff.outcome == 'failure'
 
       - name: Push Changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          branch: ${{ env.work_branch }}
-          repository: Eisuke-Umeda/template-sync-test-sub
-          force_with_lease: true
+        run: |
+          git push --set-upstream origin ${{ env.work_branch }}
         if:
           steps.check_diff.outcome == 'failure'
 
