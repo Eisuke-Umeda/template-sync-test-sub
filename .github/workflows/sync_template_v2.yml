@@ -46,7 +46,7 @@ jobs:
           commit-message: Auto sync GitHub templates
           committer: GitHub Action <action@github.com>
           author: GitHub Action <action@github.com>
-          branch: ${{ env.work_branck }}
+          branch: ${{ env.work_branch }}
           delete-branch: true
           title: Auto sync GitHub templates
 
