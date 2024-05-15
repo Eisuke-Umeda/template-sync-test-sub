@@ -9,6 +9,9 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  work_branch: sync-template-work
+
 jobs:
   sync-template:
     runs-on: ubuntu-latest
@@ -61,3 +64,21 @@ jobs:
           force: true
         if:
           steps.check_diff.outcome == 'failure'
+
+      - name: Create Pull Request
+        id: create-pull-request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PULL_REQUEST_URI=$(gh pr create -B main -t 'Auto sync GitHub templates' -b '')
+
+      - name: Approve Pull Request
+        run: |
+          gh pr review ${{steps.create-pull-request.outputs.PULL_REQUEST_URI}} --approve
+
+      - name: Merge Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{steps.create-pull-request.outputs.PULL_REQUEST_URI}} --merge
+
