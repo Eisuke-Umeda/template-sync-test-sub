@@ -41,6 +41,7 @@ jobs:
           rm -rf .tmp
 
       - name: Create Pull Request
+        id: create-pull-request
         uses: peter-evans/create-pull-request@v6
         with: 
           commit-message: Auto sync GitHub templates
@@ -50,3 +51,12 @@ jobs:
           delete-branch: true
           title: Auto sync GitHub templates
 
+      - name: Approve Pull Request
+        uses: hmarr/auto-approve-action@v4
+        with:
+          pull-request-number: ${{ steps.create-pull-request.outputs.pull-request-number }}
+          github-token: ${{ GH_TOKEN }}
+      
+      - name: Merge pull Request
+        run: |
+          gh pr merge ${{ steps.create-pull-request.outputs.pull-request-url }} --merge             
