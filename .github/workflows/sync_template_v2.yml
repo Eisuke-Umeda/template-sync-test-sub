@@ -58,5 +58,7 @@ jobs:
           github-token: ${{ secrets.GH_TOKEN }}
       
       - name: Merge pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh pr merge ${{ steps.create-pull-request.outputs.pull-request-url }} --merge             
