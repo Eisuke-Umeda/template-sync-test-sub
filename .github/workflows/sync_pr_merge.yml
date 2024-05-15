@@ -30,6 +30,8 @@ jobs:
 
       - name: Approve Pull Request
         uses: hmarr/auto-approve-action@v3
+          with:
+            github-token: ${{ secrets.GH_TOKEN }}
 
       - name: Merge Pull Request
         run: |
