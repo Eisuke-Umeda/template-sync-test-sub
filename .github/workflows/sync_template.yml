@@ -73,17 +73,3 @@ jobs:
         run: |
           PULL_REQUEST_URI=$(gh pr create -B main -t 'Auto sync GitHub templates' -b '')
 
-      - name: Approve Pull Request
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --local user.name "GitHub Action Reviewer"
-          gh pr review ${{steps.create-pull-request.outputs.PULL_REQUEST_URI}} --approve
-
-      - name: Merge Pull Request
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --local user.name "GitHub Action"
-          gh pr merge ${{steps.create-pull-request.outputs.PULL_REQUEST_URI}} --merge
-
