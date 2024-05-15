@@ -8,18 +8,15 @@ on:
       - ready_for_review # draft → prに変更された時
       - reopened # closeされたprが再度openした時
     paths:
-      - '.github/ISSUE_TEMPLATE/*'
+      - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE.md'
 
 permissions:
   contents: write
   pull-requests: write
 
-env:
-  work_branch: sync-template-work
-
 jobs:
-  rm-merge:
+  pr-merge:
     runs-on: ubuntu-latest
     env:
       PR_URL: ${{github.event.pull_request.html_url}}
