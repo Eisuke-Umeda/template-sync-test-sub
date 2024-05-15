@@ -1,0 +1,60 @@
+name: Sync GitHub Template
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          repository: Eisuke-Umeda/template_sync_main
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+          path: .tmp/
+          sparse-checkout: |
+            .github/ISSUE_TEMPLATE
+            .github/PULL_REQUEST_TEMPLATE.md
+
+      - name: Replace template
+        run: |
+          rm -rf .github/ISSUE_TEMPLATE .github/PULL_REQUEST_TEMPLATE.md
+          cp -pr .tmp/.github/ISSUE_TEMPLATE .github/
+          cp -pr .tmp/.github/PULL_REQUEST_TEMPLATE.md .github/
+          rm -rf .tmp
+
+      - name: Check Diff
+        id: check_diff
+        run: |
+          git add -N .
+          git diff --name-only --exit-code
+        continue-on-error: true
+
+      - name: Commit & Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Auto sync GitHub templates" -a
+        if:
+          steps.check_diff.outcome == 'failure'
+
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          branch: ${{ github.head_ref }}
+          repository: Eisuke-Umeda/template_sync_replica
+          force_with_lease: true
+        if:
+          steps.check_diff.outcome == 'failure'
