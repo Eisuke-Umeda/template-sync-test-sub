@@ -47,6 +47,7 @@ jobs:
           commit-message: Auto sync GitHub templates
           committer: GitHub Action <action@github.com>
           author: GitHub Action <action@github.com>
+          token: ${{ secrets.GH_TOKEN }}
           branch: ${{ env.work_branch }}
           delete-branch: true
           title: Auto sync GitHub templates
@@ -55,10 +56,10 @@ jobs:
         uses: hmarr/auto-approve-action@v4
         with:
           pull-request-number: ${{ steps.create-pull-request.outputs.pull-request-number }}
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Merge pull Request
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh pr merge ${{ steps.create-pull-request.outputs.pull-request-url }} --merge             
